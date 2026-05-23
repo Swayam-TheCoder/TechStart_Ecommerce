@@ -1,0 +1,45 @@
+import { Link } from "react-router-dom";
+
+function Footer() {
+  return (
+    <footer
+      className="
+      bg-zinc-900
+      text-zinc-400
+      py-6
+      text-center
+      border-t
+      border-zinc-800
+      mt-20
+    "
+    >
+      <p
+        className="
+          text-zinc-400
+          text-lg
+          leading-8
+          text-center
+          max-w-4xl
+          mx-auto
+          mb-4
+        "
+      >
+        TechSync is a modern tech discovery platform built for students,
+        developers and gadget enthusiasts. We help users discover the best
+        laptops, accessories, coding setups and gadgets through curated product
+        recommendations and informative blogs.
+      </p>
+      <div className="flex justify-center space-x-6 mb-4">
+        <Link className="hover:text-cyan-400" to="/privacy-policy">Privacy Policy</Link>
+
+        <Link className="hover:text-cyan-400" to="/affiliate-disclosure">Affiliate Disclosure</Link>
+
+        <Link className="hover:text-cyan-400" to="/terms-and-conditions">Terms & Conditions</Link>
+      </div>
+
+      <p>© 2026 TechSync. All rights reserved.</p>
+    </footer>
+  );
+}
+
+export default Footer;
