@@ -38,21 +38,26 @@ app.use(express.json());
 
 app.use(helmet());
 
+const allowedOrigins = [
+  "http://localhost:5174",
+  "https://tech-start-ecommerce.vercel.app",
+];
+
 app.use(
   cors({
-    origin: function (origin, callback) {
-      const allowedOrigins = [
-        "http://localhost:5174",
-        "https://tech-start-ecommerce.vercel.app"
-      ];
+    origin: (origin, callback) => {
+      // allow server-to-server or curl/postman
+      if (!origin) return callback(null, true);
 
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
       }
+
+      return callback(null, false); // ❗ don't throw error
     },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
