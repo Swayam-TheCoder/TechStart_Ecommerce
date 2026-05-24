@@ -1,4 +1,4 @@
-export const API = "http://localhost:5000";
+export const API = "https://techstart-ecommerce.onrender.com";
 // 
 // =========================
 // GET PRODUCTS

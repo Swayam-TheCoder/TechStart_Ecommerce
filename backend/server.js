@@ -43,6 +43,7 @@ app.use(
     origin: function (origin, callback) {
       const allowedOrigins = [
         "http://localhost:5174",
+        "https://tech-start-ecommerce.vercel.app"
       ];
 
       if (!origin || allowedOrigins.includes(origin)) {
