@@ -23,10 +23,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 import Profile from "./pages/Profile";
 
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import AffiliateDisclosure from "./pages/AffiliateDisclosure";
-import TermsConditions from "./pages/TermsConditions";
-
 function App() {
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("userInfo")),
@@ -92,14 +88,6 @@ function App() {
               element={<Register setUserInfo={setUserInfo} />}
             />
 
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-
-            <Route
-              path="/affiliate-disclosure"
-              element={<AffiliateDisclosure />}
-            />
-
-            <Route path="/terms-and-conditions" element={<TermsConditions />} />
           </Routes>
         </div>
 

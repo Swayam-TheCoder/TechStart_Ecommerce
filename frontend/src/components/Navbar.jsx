@@ -211,12 +211,7 @@ function Navbar() {
               Profile
             </Link>
           )}
-
-          {userInfo?.isAdmin && (
-            <Link to="/admin" onClick={() => setMenuOpen(false)}>
-              Admin
-            </Link>
-          )}
+          
         </div>
       )}
     </nav>

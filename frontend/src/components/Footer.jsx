@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 function Footer() {
   return (
     <footer
@@ -29,13 +27,6 @@ function Footer() {
         laptops, accessories, coding setups and gadgets through curated product
         recommendations and informative blogs.
       </p>
-      <div className="flex justify-center space-x-6 mb-4">
-        <Link className="hover:text-cyan-400" to="/privacy-policy">Privacy Policy</Link>
-
-        <Link className="hover:text-cyan-400" to="/affiliate-disclosure">Affiliate Disclosure</Link>
-
-        <Link className="hover:text-cyan-400" to="/terms-and-conditions">Terms & Conditions</Link>
-      </div>
 
       <p>© 2026 TechSync. All rights reserved.</p>
     </footer>
