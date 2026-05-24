@@ -1,10 +1,10 @@
 import { useState } from "react";
-
 import { useNavigate, Link } from "react-router-dom";
-
 import { loginUser } from "../services/authApi";
-
 import { useAuth } from "../context/AuthContext";
+import { GoogleLogin } from "@react-oauth/google";
+import { API } from "../services/api";
+import toast from "react-hot-toast";
 
 function Login() {
   const navigate = useNavigate();
@@ -51,6 +51,8 @@ function Login() {
 
       if (data.token) {
         login(data);
+
+        toast.success("Login successful");
 
         navigate("/");
       }
@@ -175,6 +177,35 @@ function Login() {
             Register
           </Link>
         </p>
+        <div className="mt-6 ">
+          <GoogleLogin
+            onSuccess={async (credentialResponse) => {
+              try {
+                const response = await fetch(`${API}/api/auth/google`, {
+                  method: "POST",
+
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+
+                  body: JSON.stringify({
+                    credential: credentialResponse.credential,
+                  }),
+                });
+
+                const data = await response.json();
+                login(data);
+                toast.success("Google login successful");
+                navigate("/");
+              } catch (error) {
+                console.log(error);
+              }
+            }}
+            onError={() => {
+              console.log("Login Failed");
+            }}
+          />
+        </div>
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
       </form>
     </div>

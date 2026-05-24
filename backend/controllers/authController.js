@@ -7,6 +7,8 @@ import generateToken from "../utils/generateToken.js";
 import crypto from "crypto";
 
 import nodemailer from "nodemailer";
+import { OAuth2Client } from "google-auth-library";
+
 
 // ======================
 // REGISTER
@@ -123,8 +125,9 @@ export const forgotPassword = async (req, res) => {
       },
     });
 
+    await transporter.verify();
+    console.log("SMTP ready");
     // mail
-
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
 
@@ -191,6 +194,44 @@ export const resetPassword = async (req, res) => {
     res.json({
       message: "Password reset successful",
     });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+export const googleLogin = async (req, res) => {
+  try {
+    const { credential } = req.body;
+
+    const ticket = await client.verifyIdToken({
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+
+    const { name, email } = payload;
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = await User.create({
+        name,
+        email,
+        password: "google-login-user",
+      });
+    }
+
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      token: generateToken(user._id),
+    });
+
   } catch (error) {
     res.status(500).json({
       message: error.message,

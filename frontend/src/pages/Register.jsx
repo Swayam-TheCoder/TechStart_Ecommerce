@@ -1,9 +1,8 @@
 import { useState } from "react";
-
 import { useNavigate, Link } from "react-router-dom";
-
 import { registerUser } from "../services/authApi";
 import { useAuth } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
 function Register() {
   const navigate = useNavigate();
@@ -32,7 +31,7 @@ function Register() {
     // NAME VALIDATION
 
     if (formData.name.trim().length < 3) {
-      alert("Name must be at least 3 characters");
+      toast.error("Name must be at least 3 characters");
 
       return;
     }
@@ -42,7 +41,7 @@ function Register() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(formData.email)) {
-      alert("Enter valid email");
+      toast.error("Enter valid email");
 
       return;
     }
@@ -50,8 +49,7 @@ function Register() {
     // PASSWORD VALIDATION
 
     if (formData.password.length < 6) {
-      alert("Password must be at least 6 characters");
-
+      toast.error("Password must be at least 6 characters");
       return;
     }
 
@@ -60,11 +58,11 @@ function Register() {
 
       if (data.token) {
         login(data);
-
+        toast.success("Account created successfully");
         navigate("/");
       }
     } catch (error) {
-      console.log(error);
+      toast.error("Error creating account");
     }
   };
 

@@ -45,7 +45,7 @@ function Navbar() {
             text-cyan-400
           "
         >
-          TechSync
+          TechStart
         </Link>
 
         {/* DESKTOP MENU */}
@@ -211,7 +211,7 @@ function Navbar() {
               Profile
             </Link>
           )}
-          
+
         </div>
       )}
     </nav>

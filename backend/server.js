@@ -42,7 +42,7 @@ app.use(
   cors({
     origin: function (origin, callback) {
       const allowedOrigins = [
-        "http://localhost:5173",
+        "http://localhost:5174",
       ];
 
       if (!origin || allowedOrigins.includes(origin)) {
@@ -68,7 +68,7 @@ app.use("/api/blogs", blogRoutes);
 // =========================
 
 app.get("/", (req, res) => {
-  res.send("TechSync API Running");
+  res.send("TechStart API Running");
 });
 
 // authentication routes

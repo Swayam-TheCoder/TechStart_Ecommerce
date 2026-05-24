@@ -132,7 +132,6 @@ function ProductDetails() {
         return;
       }
 
-      window.open(product.link, "_blank");
     }}
     className="
       bg-cyan-500

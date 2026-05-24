@@ -22,13 +22,13 @@ function Footer() {
           mb-4
         "
       >
-        TechSync is a modern tech discovery platform built for students,
+        TechStart is a modern tech discovery platform built for students,
         developers and gadget enthusiasts. We help users discover the best
         laptops, accessories, coding setups and gadgets through curated product
         recommendations and informative blogs.
       </p>
 
-      <p>© 2026 TechSync. All rights reserved.</p>
+      <p>© 2026 TechStart. All rights reserved.</p>
     </footer>
   );
 }
