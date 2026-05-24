@@ -23,13 +23,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 import Profile from "./pages/Profile";
 
-import AdminDashboard from "./pages/AdminDashboard";
-import AdminRoute from "./components/AdminRoute";
-import AdminProducts from "./pages/AdminProducts";
-import AdminBlogs from "./pages/AdminBlogs";
-import AdminUsers from "./pages/AdminUsers";
-import AdminContacts from "./pages/AdminContacts";
-
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import AffiliateDisclosure from "./pages/AffiliateDisclosure";
 import TermsConditions from "./pages/TermsConditions";
@@ -83,43 +76,7 @@ function App() {
               }
             />
 
-            <Route
-              path="/admin"
-              element={
-                <AdminRoute>
-                  <AdminDashboard />
-                </AdminRoute>
-              }
-            />
-
-            <Route
-              path="/admin/products"
-              element={
-                <AdminRoute>
-                  <AdminProducts />
-                </AdminRoute>
-              }
-            />
-
-            <Route
-              path="/admin/blogs"
-              element={
-                <AdminRoute>
-                  <AdminBlogs />
-                </AdminRoute>
-              }
-            />
-
-            <Route
-              path="/admin/contacts"
-              element={
-                <AdminRoute>
-                  <AdminContacts />
-                </AdminRoute>
-              }
-            />
-
-            <Route path="/admin/users" element={<AdminUsers />} />
+            
 
             <Route path="/forgot-password" element={<ForgotPassword />} />
 

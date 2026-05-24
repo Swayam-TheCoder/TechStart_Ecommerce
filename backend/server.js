@@ -42,7 +42,6 @@ app.use(
   cors({
     origin: function (origin, callback) {
       const allowedOrigins = [
-        "https://techsync01.vercel.app",
         "http://localhost:5173",
       ];
 

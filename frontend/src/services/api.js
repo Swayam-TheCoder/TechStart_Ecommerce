@@ -1,4 +1,4 @@
-export const API = "https://techsync01.onrender.com";
+export const API = "http://localhost:5000";
 // 
 // =========================
 // GET PRODUCTS

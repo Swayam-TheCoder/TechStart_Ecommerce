@@ -145,17 +145,6 @@ function Navbar() {
             </Link>
           )}
 
-          {userInfo?.isAdmin && (
-            <Link
-              to="/admin"
-              className="
-                hover:text-cyan-400
-                transition
-              "
-            >
-              Admin
-            </Link>
-          )}
         </div>
 
         {/* MOBILE BUTTON */}
