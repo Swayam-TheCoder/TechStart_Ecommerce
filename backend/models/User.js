@@ -14,18 +14,21 @@ const userSchema = new mongoose.Schema(
     },
 
     password: {
-  type: String,
-  required: true,
-},
+      type: String,
+    },
 
-resetPasswordToken: String,
+    googleLogin: {
+      type: Boolean,
+      default: false,
+    },
+    resetPasswordToken: String,
 
-resetPasswordExpire: Date,
+    resetPasswordExpire: Date,
 
-isAdmin: {
-  type: Boolean,
-  default: false,
-},
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

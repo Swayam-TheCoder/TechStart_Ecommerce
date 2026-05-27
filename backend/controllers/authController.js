@@ -9,7 +9,6 @@ import crypto from "crypto";
 import nodemailer from "nodemailer";
 import { OAuth2Client } from "google-auth-library";
 
-
 // ======================
 // REGISTER
 // ======================
@@ -93,6 +92,11 @@ export const forgotPassword = async (req, res) => {
       });
     }
 
+    if (user.googleLogin) {
+      return res.status(400).json({
+        message: "This account uses Google Login",
+      });
+    }
     // token
 
     const resetToken = crypto.randomBytes(32).toString("hex");
@@ -121,7 +125,7 @@ export const forgotPassword = async (req, res) => {
         pass: process.env.EMAIL_PASS,
       },
     });
-    
+
     // mail
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
@@ -223,7 +227,6 @@ export const googleLogin = async (req, res) => {
       email: user.email,
       token: generateToken(user._id),
     });
-
   } catch (error) {
     res.status(500).json({
       message: error.message,

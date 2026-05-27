@@ -24,6 +24,10 @@ function ForgotPassword() {
       });
 
       const data = await response.json();
+      if (!response.ok) {
+        setMessage(data.message);
+        return;
+      }
 
       setMessage(data.message);
     } catch (error) {
@@ -101,11 +105,15 @@ function ForgotPassword() {
 
         {message && (
           <p
-            className="
-              text-green-400
+            className={`
               mt-5
               text-center
-            "
+              ${
+                message.toLowerCase().includes("sent")
+                  ? "text-green-400"
+                  : "text-red-400"
+              }
+            `}
           >
             {message}
           </p>
