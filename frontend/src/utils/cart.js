@@ -2,10 +2,7 @@ export const getCart = () => {
   return JSON.parse(localStorage.getItem("cart")) || [];
 };
 
-// ======================
 // ADD TO CART
-// ======================
-
 export const addToCart = (product) => {
 
   const cart = getCart();
@@ -15,16 +12,12 @@ export const addToCart = (product) => {
   );
 
   if (existingProduct) {
-
     existingProduct.quantity += 1;
-
   } else {
-
     cart.push({
       ...product,
       quantity: 1,
     });
-
   }
 
   localStorage.setItem(
@@ -36,10 +29,7 @@ export const addToCart = (product) => {
 );
 };
 
-// ======================
 // REMOVE CART ITEM
-// ======================
-
 export const removeCartItem = (id) => {
 
   const cart = getCart().filter(
@@ -55,9 +45,7 @@ export const removeCartItem = (id) => {
 );
 };
 
-// ======================
 // UPDATE QUANTITY
-// ======================
 
 export const updateQuantity = (
   id,
@@ -94,4 +82,20 @@ export const updateQuantity = (
   window.dispatchEvent(
   new Event("storage")
 );
+};
+
+// buy now
+export const buyNow = (product) => {
+  
+  const directCart = [
+    {
+      ...product,
+      quantity: 1,
+    },
+  ];
+
+  localStorage.setItem(
+    "cart",
+    JSON.stringify(directCart)
+  );
 };

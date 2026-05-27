@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { API } from "../services/api";
 import toast from "react-hot-toast";
-import { addToCart } from "../utils/cart";
+import { addToCart, buyNow } from "../utils/cart";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -150,18 +150,35 @@ function ProductDetails() {
             </button>
 
             <button
-              className="
-      bg-green-500
-      hover:bg-green-600
-      px-6
-      py-3
-      rounded-xl
-      font-semibold
-      transition
-    "
-            >
-              Buy Now
-            </button>
+  onClick={() => {
+
+    const userInfo =
+      JSON.parse(
+        localStorage.getItem("userInfo")
+      );
+
+    if (!userInfo) {
+      navigate("/login");
+      return;
+    }
+
+    buyNow(product);
+
+    navigate("/checkout");
+  }}
+
+  className="
+    bg-green-500
+    hover:bg-green-600
+    px-6
+    py-3
+    rounded-xl
+    font-semibold
+    transition
+  "
+>
+  Buy Now
+</button>
           </div>
         </div>
       </div>
