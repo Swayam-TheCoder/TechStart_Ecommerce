@@ -3,39 +3,24 @@ dotenv.config({
   path: "./.env",
 });
 import express from "express";
-
 import cors from "cors";
-
 import helmet from "helmet";
-
 import connectDB from "./config/db.js";
-
 import productRoutes from "./routes/productRoutes.js";
-
 import blogRoutes from "./routes/blogRoutes.js";
-
 import authRoutes from "./routes/authRoutes.js";
-
 import adminRoutes from "./routes/adminRoutes.js";
-
 import userRoutes from "./routes/userRoutes.js";
-
 import contactRoutes from "./routes/contactRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
 
 const app = express();
 
-// =========================
 // DATABASE
-// =========================
-
 connectDB();
 
-// =========================
 // MIDDLEWARE
-// =========================
-
 app.use(express.json());
-
 app.use(helmet());
 
 const allowedOrigins = [
@@ -61,18 +46,11 @@ app.use(
   })
 );
 
-// =========================
 // ROUTES
-// =========================
-
 app.use("/api/products", productRoutes);
-
 app.use("/api/blogs", blogRoutes);
 
-// =========================
 // HOME ROUTE
-// =========================
-
 app.get("/", (req, res) => {
   res.send("TechStart API Running");
 });
@@ -87,10 +65,10 @@ app.use("/api/users", userRoutes);
 // contact routes
 app.use("/api/contact", contactRoutes);
 
-// =========================
-// SERVER
-// =========================
+// order routes
+app.use("/api/orders", orderRoutes);
 
+// SERVER
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {

@@ -1,38 +1,27 @@
-export const API = "https://techstart-ecommerce.onrender.com";
-// 
-// =========================
-// GET PRODUCTS
-// =========================
+export const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
+console.log(import.meta.env.VITE_API_URL);
+
+// GET PRODUCTS
 export const getProducts = async () => {
   try {
     const response = await fetch(
       `${API}/api/products`
     );
-
     if (!response.ok) {
       throw new Error(
         "Failed to fetch products"
       );
     }
-
-    const data =
-      await response.json();
-
+    const data = await response.json();
     return data || [];
-
   } catch (error) {
-
     console.log(error);
-
     return [];
   }
 };
 
-// =========================
 // GET BLOGS
-// =========================
-
 export const getBlogs = async () => {
   try {
     const response = await fetch(

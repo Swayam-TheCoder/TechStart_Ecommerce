@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getCart } from "../utils/cart";
 import { useAuth } from "../context/AuthContext";
+import { API } from "../services/api";
 
 function Checkout() {
   const [cart, setCart] = useState([]);
@@ -44,6 +45,119 @@ function Checkout() {
   );
 
 }, [shippingAddress]);
+
+
+const handlePayment = async () => {
+  try {
+    const userInfo =
+      JSON.parse(
+        localStorage.getItem("userInfo")
+      );
+
+    // CREATE ORDER
+    const response = await fetch(
+      `${API}/api/orders/create-order`,
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json",
+
+          Authorization:
+            `Bearer ${userInfo.token}`,
+        },
+        body: JSON.stringify({
+          amount: totalPrice,
+        }),
+      }
+    );
+
+    const order = await response.json();
+
+    // RAZORPAY OPTIONS
+    const options = {
+      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+      amount: order.amount,
+      currency: "INR",
+      name: "TechStart",
+      description: "Order Payment",
+      order_id: order.id,
+
+      handler: async function (
+        response
+      ) {
+
+        // VERIFY PAYMENT
+
+        const verifyRes =
+          await fetch(
+            `${API}/api/orders/verify-payment`,
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json",
+
+                Authorization:
+                  `Bearer ${userInfo.token}`,
+              },
+
+              body: JSON.stringify({
+
+                ...response,
+
+                orderItems: cart,
+
+                shippingAddress,
+
+                totalPrice,
+              }),
+            }
+          );
+
+        const data =
+          await verifyRes.json();
+
+        console.log(data);
+
+        alert("Payment Successful");
+
+        localStorage.removeItem("cart");
+
+        window.location.href =
+          "/profile";
+      },
+
+      prefill: {
+        name:
+          shippingAddress.fullName,
+
+        email:
+          shippingAddress.email,
+
+        contact:
+          shippingAddress.phone,
+      },
+
+      theme: {
+        color: "#06b6d4",
+      },
+    };
+
+    const razor =
+      new window.Razorpay(options);
+
+    razor.open();
+
+  } catch (error) {
+
+    console.log(error);
+  }
+};
+
+
 
   return (
     <div
@@ -266,20 +380,21 @@ function Checkout() {
           </div>
 
           <button
-            className="
-              mt-8
-              w-full
-              bg-cyan-500
-              hover:bg-cyan-600
-              py-4
-              rounded-xl
-              font-bold
-              text-lg
-              transition
-            "
-          >
-            Proceed To Payment
-          </button>
+  onClick={handlePayment}
+  className="
+    mt-8
+    w-full
+    bg-cyan-500
+    hover:bg-cyan-600
+    py-4
+    rounded-xl
+    font-bold
+    text-lg
+    transition
+  "
+>
+  Proceed To Payment
+</button>
         </div>
       </div>
     </div>

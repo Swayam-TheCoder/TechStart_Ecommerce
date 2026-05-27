@@ -1,11 +1,7 @@
 import jwt from "jsonwebtoken";
-
 import User from "../models/User.js";
 
-// ======================
 // PROTECT ROUTE
-// ======================
-
 export const protect = async (
   req,
   res,
@@ -13,60 +9,43 @@ export const protect = async (
 ) => {
 
   let token;
-
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
   ) {
 
     try {
-
-      token =
-        req.headers.authorization.split(" ")[1];
+      token = req.headers.authorization.split(" ")[1];
 
       const decoded =
         jwt.verify(
           token,
           process.env.JWT_SECRET
         );
-
       req.user =
         await User.findById(decoded.id)
         .select("-password");
-
       next();
-
     } catch (error) {
-
       res.status(401).json({
         message: "Not authorized",
       });
     }
-
-  } else {
-
+  } 
+  else {
     res.status(401).json({
       message: "No token",
     });
   }
 };
 
-// ======================
 // ADMIN ROUTE
-// ======================
-
-export const admin = (
-  req,
-  res,
-  next
+export const admin = ( req, res, next
 ) => {
-
   if (req.user && req.user.isAdmin) {
-
     next();
-
-  } else {
-
+  } 
+  else {
     res.status(403).json({
       message: "Admin only",
     });
