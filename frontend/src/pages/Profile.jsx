@@ -108,6 +108,39 @@ function Profile() {
             </button>
           </div>
         </div>
+
+        <div
+          className="
+    grid
+    md:grid-cols-2
+    gap-6
+  "
+        >
+          <div
+            onClick={() => navigate("/cart")}
+            className="
+      bg-zinc-900
+      p-8
+      rounded-3xl
+      cursor-pointer
+      hover:bg-zinc-800
+      transition
+    "
+          >
+            <h1
+              className="
+        text-3xl
+        font-bold
+        text-cyan-400
+        mb-3
+      "
+            >
+              My Cart
+            </h1>
+
+            <p className="text-zinc-400">View cart items and checkout</p>
+          </div>
+        </div>
       </div>
     </div>
   );

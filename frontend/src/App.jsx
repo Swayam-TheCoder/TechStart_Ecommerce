@@ -22,6 +22,8 @@ import ResetPassword from "./pages/ResetPassword";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import Profile from "./pages/Profile";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
 
 function App() {
   const [userInfo, setUserInfo] = useState(
@@ -72,7 +74,23 @@ function App() {
               }
             />
 
-            
+            <Route
+              path="/cart"
+              element={
+                <ProtectedRoute>
+                  <Cart />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/checkout"
+              element={
+                <ProtectedRoute>
+                  <Checkout />
+                </ProtectedRoute>
+              }
+            />
 
             <Route path="/forgot-password" element={<ForgotPassword />} />
 
@@ -87,7 +105,6 @@ function App() {
               path="/register"
               element={<Register setUserInfo={setUserInfo} />}
             />
-
           </Routes>
         </div>
 

@@ -1,19 +1,32 @@
 import { Link } from "react-router-dom";
-
-import { useState } from "react";
-
-import { Menu, X } from "lucide-react";
-
+import { useState, useEffect } from "react";
+import { Menu, X, ShoppingCart } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+import { getCart } from "../utils/cart";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { userInfo } = useAuth();
+  const [cartCount, setCartCount] = useState(0);
 
-  // ======================
+  useEffect(() => {
+    const updateCartCount = () => {
+      const cart = getCart();
+
+      const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+
+      setCartCount(totalItems);
+    };
+
+    updateCartCount();
+
+    window.addEventListener("storage", updateCartCount);
+
+    return () => {
+      window.removeEventListener("storage", updateCartCount);
+    };
+  }, []);
   // LOAD USER
-  // ======================
-
   return (
     <nav
       className="
@@ -109,6 +122,38 @@ function Navbar() {
             ❤️
           </Link>
 
+          <Link
+            to="/cart"
+            className="
+    relative
+    hover:text-cyan-400
+    transition
+  "
+          >
+            <ShoppingCart size={24} />
+
+            {cartCount > 0 && (
+              <span
+                className="
+        absolute
+        -top-3
+        -right-3
+        bg-cyan-500
+        text-white
+        text-xs
+        w-5
+        h-5
+        rounded-full
+        flex
+        items-center
+        justify-center
+      "
+              >
+                {cartCount}
+              </span>
+            )}
+          </Link>
+
           {!userInfo && (
             <>
               <Link
@@ -144,7 +189,6 @@ function Navbar() {
               Profile
             </Link>
           )}
-
         </div>
 
         {/* MOBILE BUTTON */}
@@ -186,6 +230,10 @@ function Navbar() {
             Blog
           </Link>
 
+          <Link to="/cart" onClick={() => setMenuOpen(false)}>
+            Cart ({cartCount})
+          </Link>
+
           <Link to="/contact" onClick={() => setMenuOpen(false)}>
             Contact
           </Link>
@@ -211,7 +259,6 @@ function Navbar() {
               Profile
             </Link>
           )}
-
         </div>
       )}
     </nav>

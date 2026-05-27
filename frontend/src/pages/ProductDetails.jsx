@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { API } from "../services/api";
+import toast from "react-hot-toast";
+import { addToCart } from "../utils/cart";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -16,9 +17,7 @@ function ProductDetails() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(
-          `${API}/api/products/${id}`,
-        );
+        const response = await fetch(`${API}/api/products/${id}`);
 
         const data = await response.json();
 
@@ -87,14 +86,14 @@ function ProductDetails() {
 
         {/* CONTENT */}
         <div
-  className="
+          className="
     flex
     flex-col
     justify-center
   "
->
-  <h1
-    className="
+        >
+          <h1
+            className="
       text-2xl
       sm:text-3xl
       lg:text-4xl
@@ -104,12 +103,12 @@ function ProductDetails() {
       lg:mb-6
       leading-tight
     "
-  >
-    {product.title}
-  </h1>
+          >
+            {product.title}
+          </h1>
 
-  <p
-    className="
+          <p
+            className="
       text-sm
       sm:text-base
       lg:text-lg
@@ -119,38 +118,52 @@ function ProductDetails() {
       mb-6
       lg:mb-8
     "
-  >
-    {product.description}
-  </p>
+          >
+            {product.description}
+          </p>
 
-  <button
-    onClick={() => {
-      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+          <div className="flex gap-4 flex-wrap">
+            <button
+              onClick={() => {
+                const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-      if (!userInfo) {
-        navigate("/login");
-        return;
-      }
+                if (!userInfo) {
+                  navigate("/login");
+                  return;
+                }
 
-    }}
-    className="
+                addToCart(product);
+
+                toast.success("Added to cart");
+              }}
+              className="
       bg-cyan-500
       hover:bg-cyan-600
-      px-5
-      sm:px-6
+      px-6
       py-3
       rounded-xl
       font-semibold
-      text-sm
-      sm:text-base
       transition
-      w-full
-      sm:w-fit
     "
-  >
-    Buy Now
-  </button>
-</div>
+            >
+              Add To Cart
+            </button>
+
+            <button
+              className="
+      bg-green-500
+      hover:bg-green-600
+      px-6
+      py-3
+      rounded-xl
+      font-semibold
+      transition
+    "
+            >
+              Buy Now
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
