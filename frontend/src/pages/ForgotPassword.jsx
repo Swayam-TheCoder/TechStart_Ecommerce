@@ -3,34 +3,33 @@ import { API } from "../services/api";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
+
     try {
-      const response = await fetch(
-        `${API}/api/auth/forgot-password`,
-
-        {
-          method: "POST",
-
-          headers: {
-            "Content-Type": "application/json",
-          },
-
-          body: JSON.stringify({
-            email,
-          }),
+      const response = await fetch(`${API}/api/auth/forgot-password`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+
+        body: JSON.stringify({
+          email,
+        }),
+      });
 
       const data = await response.json();
 
       setMessage(data.message);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -86,6 +85,7 @@ function ForgotPassword() {
 
         <button
           type="submit"
+          disabled={loading}
           className="
             w-full
             bg-cyan-500
@@ -93,9 +93,10 @@ function ForgotPassword() {
             py-4
             rounded-xl
             font-bold
+            disabled:opacity-50
           "
         >
-          Send Reset Link
+          {loading ? "Sending..." : "Send Reset Link"}
         </button>
 
         {message && (

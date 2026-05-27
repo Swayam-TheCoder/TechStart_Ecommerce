@@ -80,10 +80,7 @@ export const loginUser = async (req, res) => {
   }
 };
 
-// ======================
 // FORGOT PASSWORD
-// ======================
-
 export const forgotPassword = async (req, res) => {
   try {
     const user = await User.findOne({
@@ -124,9 +121,7 @@ export const forgotPassword = async (req, res) => {
         pass: process.env.EMAIL_PASS,
       },
     });
-
-    await transporter.verify();
-    console.log("SMTP ready");
+    
     // mail
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
@@ -158,10 +153,7 @@ export const forgotPassword = async (req, res) => {
   }
 };
 
-// ======================
 // RESET PASSWORD
-// ======================
-
 export const resetPassword = async (req, res) => {
   try {
     const resetPasswordToken = crypto

@@ -163,7 +163,7 @@ function ProductDetails() {
     }
 
     buyNow(product);
-
+    toast.success("Redirecting to checkout");
     navigate("/checkout");
   }}
 

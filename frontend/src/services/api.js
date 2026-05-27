@@ -1,6 +1,4 @@
-export const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
-
-console.log(import.meta.env.VITE_API_URL);
+export const API = import.meta.env.VITE_API_URL || "http://localhost:5000"; 
 
 // GET PRODUCTS
 export const getProducts = async () => {
